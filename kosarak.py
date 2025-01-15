@@ -1,18 +1,19 @@
+
 import sys
 
 def parse_kosarak_to_sparse_arff(file_path):
-    # Step 1: Read the file and collect all transactions
     with open(file_path, 'r') as file:
         transactions = [line.strip().split() for line in file]
-    
-    # Step 2: Identify all unique items
+
     unique_items = set(item for transaction in transactions for item in transaction)
-    sorted_items = sorted(unique_items)
-    item_index = {item: idx for idx, item in enumerate(sorted_items)}
     
+    sorted_items = sorted(unique_items)
+
+    item_index = {item: idx for idx, item in enumerate(sorted_items)}
+
     arff_content = []
     arff_content.append("@relation kosarak")
-    
+
     for item in sorted_items:
         arff_content.append(f"@attribute item_{item} {{0, 1}}")
     
