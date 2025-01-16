@@ -1,33 +1,27 @@
-
+# Problem 2 A - Python program to console log ARFF file from Kosarak dataset
 import sys
 
 def parse_kosarak_to_sparse_arff(file_path):
     with open(file_path, 'r') as file:
         transactions = [line.strip().split() for line in file]
 
-    unique_items = set(int(item) for transaction in transactions for item in transaction)
-    
-    sorted_items = sorted(unique_items, key=lambda x: int(x))
+    sorted_items = sorted(set(item for transaction in transactions for item in transaction.strip().split()), key=lambda x: int(x))
 
-    item_index = {item: idx for idx, item in enumerate(sorted_items)}
+    item_index = {item: i for i, item in enumerate(sorted_items)}
 
-    arff_content = []
-    arff_content.append("@relation kosarak")
+    content = ["@relation kosarak"]
 
     for item in sorted_items:
-        arff_content.append(f"@attribute item_{item} {{0, 1}}")
+        content.append(f"@attribute item_{item} {{0, 1}}")
     
-    arff_content.append("@data")
+    content.append("@data")
     for transaction in transactions:
         indices = [str(item_index[item]) for item in transaction]
-        arff_content.append("{" + ",".join(f"{idx} 1" for idx in indices) + "}")
+        content.append("{" + ",".join(f"{i} 1" for i in indices) + "}")
     
-    return "\n".join(arff_content)
+    return "\n".join(content)
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python script.py <path_to_kosarak_data>")
-    else:
-        file_path = sys.argv[1]
-        arff_output = parse_kosarak_to_sparse_arff(file_path)
-        print(arff_output)
+
+file_path = sys.argv[1]
+arff_output = parse_kosarak_to_sparse_arff(file_path)
+print(arff_output)

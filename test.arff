@@ -1,9 +1,0 @@
-@relation kosarak
-@attribute item_1 {0,1}
-@attribute item_2 {0,1}
-@attribute item_3 {0,1}
-@attribute item_4 {0,1}
-@data
-{0 1,1 1,2 1}
-{1 1,2 1}
-{0 1,3 1}
