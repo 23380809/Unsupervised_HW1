@@ -5,9 +5,9 @@ def parse_kosarak_to_sparse_arff(file_path):
     with open(file_path, 'r') as file:
         transactions = [line.strip().split() for line in file]
 
-    unique_items = set(item for transaction in transactions for item in transaction)
+    unique_items = set(int(item) for transaction in transactions for item in transaction)
     
-    sorted_items = sorted(unique_items)
+    sorted_items = sorted(unique_items, key=lambda x: int(x))
 
     item_index = {item: idx for idx, item in enumerate(sorted_items)}
 
